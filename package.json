@@ -1,0 +1,11 @@
+{
+  "name": "fog2-army-parser",
+  "version": "1.0.0",
+  "description": "Parses Field of Glory 2 army lists into a json through command line",
+  "main": "army-parse.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lawrie",
+  "license": "ISC"
+}
