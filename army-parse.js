@@ -20,7 +20,7 @@ function parseArmyList(err, data) {
   if (err) throw err;
   let lines = data.split('\r\n');
   lines.forEach(parseLine);
-  console.log(output[19]);
+  outputJSON();
 }
 
 function parseLine(line, lineNo, lines) {
@@ -108,8 +108,10 @@ function parseWords (words) {
       currChunk.units[unitI][rangeName] = value;
       return (0);
     }
-
   }
+}
 
-
+function outputJSON() {
+let outputName = `${filename.slice(0, filename.indexOf('.'))}.json`;
+ fs.writeFile(outputName, JSON.stringify(output));
 }
