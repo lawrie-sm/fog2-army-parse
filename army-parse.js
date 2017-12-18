@@ -80,7 +80,7 @@ function parseWords (words) {
 
   } else if (words[0] === 'DEPLOYMENT') {
 
-    currChunk.demploymentStyle = words[1];
+    currChunk.deploymentStyle = words[1];
 
   } else if (words[0] === 'MAPSET') {
 
