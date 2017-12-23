@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 if (process.argv.length < 4) {
-  console.log('Need to input filenames (ArmyList.txt & Text2.txt) Text2 must be utf8');
+  console.log('Need to input filenames (ArmyList.txt & Text2_utf8.txt) Text2 must be utf8');
   process.exit(1);
 }
 
@@ -118,7 +118,7 @@ function addInfoFromTxt2ToOutput(err, data) {
       let captureID = /IDS_ARMY_(.*?),(.*),/g;
       let match = captureID.exec(line);
       let thisArmyI = output.findIndex((o) => o.identifier === match[1]);
-      if (output[thisArmyI]) output[thisArmyI].name = match[2].replace(/"/g, '').trim();
+      if (output[thisArmyI]) output[thisArmyI].fullName = match[2].replace(/"/g, '').trim();
       } else if ((line.toLowerCase().includes('intro'))) {
         let captureID = /(.*?),(.*),/g;
         let match = captureID.exec(line);
@@ -127,7 +127,6 @@ function addInfoFromTxt2ToOutput(err, data) {
       }
     }
   });
-  console.log(output);
   outputJSON();
 }
 

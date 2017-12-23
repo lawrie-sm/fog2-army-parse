@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 if (process.argv.length < 4) {
-  console.log('Need to input filenames (quads_s.json & Text2.txt) Text2.txt must be UTF8');
+  console.log('Need to input filenames (quads_s.json & Text2_utf8) Text2.txt must be UTF8');
   process.exit(1);
 }
 
