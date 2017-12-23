@@ -1,12 +1,13 @@
 'use-strict';
 const fs = require('fs');
 
-if (process.argv.length < 3) {
-  console.log('Need to input filename');
+if (process.argv.length < 4) {
+  console.log('Need to input filenames (ArmyList.txt & Text2.txt)');
   process.exit(1);
 }
 
 let filename = process.argv[2];
+let txt2filename = process.argv[3];
 fs.readFile(filename, 'utf8', parseArmyList);
 
 
@@ -19,8 +20,8 @@ let output = [];
 function parseArmyList(err, data) {
   if (err) throw err;
   let lines = data.split('\r\n');
-  lines.forEach(parseLine);
-  outputJSON();
+  lines.forEach(parseLine); //Adds to output
+  fs.readFile(txt2filename, 'utf8', addInfoFromTxt2ToOutput); //Updated output with text info
 }
 
 function parseLine(line, lineNo, lines) {
@@ -63,12 +64,8 @@ function parseLine(line, lineNo, lines) {
 }
 
 function parseWords (words) {
-  
-  if (words[0] === 'SORTNAME') {
 
-    currChunk.name = words[1];
-
-  } else if (words[0] === 'YEARS') {
+  if (words[0] === 'YEARS') {
 
     /*
     Must subtract 3000 as the game start date is 3000BC
@@ -86,6 +83,8 @@ function parseWords (words) {
 
     currChunk.map = words[1];
 
+  } else if (words[0] === 'INTRO') {
+    currChunk.introIdentifier = words[1];
   } else {
 
     let captureUnitID = /UNIT_([0-9])/g;
@@ -109,6 +108,26 @@ function parseWords (words) {
       return (0);
     }
   }
+}
+
+function addInfoFromTxt2ToOutput(err, data) {
+  let lines = data.split('\r\n');
+  lines.forEach((line) => {
+  if (line.toLowerCase().includes('ids_army_')) {
+    if (!(line.toLowerCase().includes('intro'))) {
+      let captureID = /IDS_ARMY_(.*?),(.*),/g;
+      let match = captureID.exec(line);
+      let thisArmyI = output.findIndex((o) => o.identifier === match[1]);
+      if (output[thisArmyI]) output[thisArmyI].name = match[2];
+      } else if ((line.toLowerCase().includes('intro'))) {
+        let captureID = /(.*?),(.*),/g;
+        let match = captureID.exec(line);
+        let thisArmyI = output.findIndex((o) => o.introIdentifier === match[1]);
+        if (output[thisArmyI]) output[thisArmyI].intro = match[2];
+      }
+    }
+  });
+  outputJSON();
 }
 
 function outputJSON() {
