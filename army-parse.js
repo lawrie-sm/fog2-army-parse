@@ -2,7 +2,7 @@
 const fs = require('fs');
 
 if (process.argv.length < 4) {
-  console.log('Need to input filenames (ArmyList.txt & Text2.txt)');
+  console.log('Need to input filenames (ArmyList.txt & Text2.txt) Text2 must be utf8');
   process.exit(1);
 }
 
