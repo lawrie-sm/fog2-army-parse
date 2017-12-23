@@ -21,7 +21,7 @@ function parseArmyList(err, data) {
   if (err) throw err;
   let lines = data.split('\r\n');
   lines.forEach(parseLine); //Adds to output
-  fs.readFile(txt2filename, 'utf8', addInfoFromTxt2ToOutput); //Updated output with text info
+  fs.readFile(txt2filename, 'utf8', addInfoFromTxt2ToOutput); //Updates output with text info and creates json
 }
 
 function parseLine(line, lineNo, lines) {
@@ -118,15 +118,16 @@ function addInfoFromTxt2ToOutput(err, data) {
       let captureID = /IDS_ARMY_(.*?),(.*),/g;
       let match = captureID.exec(line);
       let thisArmyI = output.findIndex((o) => o.identifier === match[1]);
-      if (output[thisArmyI]) output[thisArmyI].name = match[2];
+      if (output[thisArmyI]) output[thisArmyI].name = match[2].replace(/"/g, '').trim();
       } else if ((line.toLowerCase().includes('intro'))) {
         let captureID = /(.*?),(.*),/g;
         let match = captureID.exec(line);
         let thisArmyI = output.findIndex((o) => o.introIdentifier === match[1]);
-        if (output[thisArmyI]) output[thisArmyI].intro = match[2];
+        if (output[thisArmyI]) output[thisArmyI].intro = match[2].replace(/"/g, '').trim();
       }
     }
   });
+  console.log(output);
   outputJSON();
 }
 
