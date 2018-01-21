@@ -1,20 +1,4 @@
-
----------------------------------------------------------------------------
-Game data import process
----------------------------------------------------------------------------
-- Cut downs squds remove unused headers and columns (can include unused capabilities e.g hand cannon)
-- Convert to JSON
-- Convert string digits into ints (Regex)
-Find: "([0-9]+)"
-Replace: $1
-- Parse Army List & Text2
-- Add unit names to the json using unit-info-adder
-- Make Both jsons into js files for importation by the frontend
-
-
-UNIT INFO AND NAMES
-
-- Included in \Field of Glory II\Data\Text as "Text2.txt"
+A dev post on the game data, copied from a sticky on the official modding forums
 
 ---------------------------------------------------------------------------
 DEV POST
